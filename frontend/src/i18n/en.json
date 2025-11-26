@@ -1,0 +1,39 @@
+{
+  "appTitle": "Sober Helper",
+  "appSubtitle": "MiniApp + Web/PWA",
+  "nav": {
+    "home": "Home",
+    "chat": "Chat",
+    "checkIn": "Check-in",
+    "journal": "Journal",
+    "settings": "Settings"
+  },
+  "home": {
+    "streak": "Current streak",
+    "goal": "Goal",
+    "motivation": "Motivation",
+    "quick": "Quick actions"
+  },
+  "cta": {
+    "chat": "Open chat",
+    "checkIn": "Daily check-in",
+    "sos": "SOS — craving",
+    "journal": "Write note",
+    "progress": "View progress",
+    "billing": "Upgrade to Pro",
+    "referrals": "Invite friends"
+  },
+  "personas": {
+    "calm": "Calm mentor",
+    "friendly": "Friendly buddy",
+    "coach": "Tough coach",
+    "toxic": "Toxic mode"
+  },
+  "sections": {
+    "progress": "Progress",
+    "journal": "Journal",
+    "settings": "Settings",
+    "billing": "Billing",
+    "referrals": "Referrals"
+  }
+}

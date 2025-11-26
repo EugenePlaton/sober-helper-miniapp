@@ -1,0 +1,39 @@
+{
+  "appTitle": "Sober Helper",
+  "appSubtitle": "Мини-приложение + Web/PWA",
+  "nav": {
+    "home": "Главная",
+    "chat": "Чат",
+    "checkIn": "Чек-ин",
+    "journal": "Журнал",
+    "settings": "Настройки"
+  },
+  "home": {
+    "streak": "Текущий стрик",
+    "goal": "Цель",
+    "motivation": "Мотивация",
+    "quick": "Быстрые действия"
+  },
+  "cta": {
+    "chat": "Открыть чат",
+    "checkIn": "Дневной чек-ин",
+    "sos": "SOS — тяга",
+    "journal": "Новая заметка",
+    "progress": "Посмотреть прогресс",
+    "billing": "Перейти на Pro",
+    "referrals": "Пригласить друзей"
+  },
+  "personas": {
+    "calm": "Спокойный наставник",
+    "friendly": "Дружелюбный друг",
+    "coach": "Жёсткий тренер",
+    "toxic": "Токсичный режим"
+  },
+  "sections": {
+    "progress": "Прогресс",
+    "journal": "Журнал",
+    "settings": "Настройки",
+    "billing": "Подписка",
+    "referrals": "Рефералы"
+  }
+}
