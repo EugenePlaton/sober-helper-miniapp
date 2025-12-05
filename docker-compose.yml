@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: sober_helper
+      POSTGRES_PASSWORD: sober_helper
+      POSTGRES_DB: sober_helper
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      APP_NAME: "Sober Helper API"
+      DEBUG: "true"
+      BACKEND_CORS_ORIGINS: '["http://localhost:5173","http://localhost:4173"]'
+      DATABASE_URL: "postgresql+psycopg://sober_helper:sober_helper@db:5432/sober_helper"
+      SECRET_KEY: "changeme"
+      ACCESS_TOKEN_EXPIRE_MINUTES: "1440"
+    volumes:
+      - ./backend:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+    environment:
+      VITE_API_URL: "http://localhost:8000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: npm run dev -- --host 0.0.0.0 --port 5173
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

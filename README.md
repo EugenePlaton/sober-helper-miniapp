@@ -25,6 +25,12 @@ npm install
 npm run dev
 ```
 
+## Docker Compose (Backend + Frontend + Postgres)
+- При желании скопируйте пример переменных: `cp backend/.env.example backend/.env` и обновите значения.
+- Запустите всё разом из корня: `docker compose up --build`.
+- Доступы по умолчанию: API `http://localhost:8000` (Swagger на `/docs`), фронт `http://localhost:5173`, Postgres `localhost:5432` с `sober_helper/sober_helper` и БД `sober_helper`.
+- Код монтируется в контейнеры, бекенд стартует с `--reload`, фронт — с Vite dev server и HMR.
+
 ## Что реализовано в каркасе
 - FastAPI приложение с CORS, health-check `/health`, и минимальным CRUD для пользователей (SQLAlchemy модели включают User/Habit/CheckIn/Journal/ChatHistory/ChatSummary/Settings/Subscription/ReferralCode/ReferralEvent).
 - Базовые React-страницы: Login, Onboarding, Home, Chat, Check-in, Journal, Progress, Settings, Billing, Referrals.
