@@ -22,8 +22,8 @@ const Settings = () => {
               <button
                 key={p.key}
                 onClick={() => setPersona(p.key)}
-                className={`border border-slate-200 rounded-tele p-2 text-sm ${
-                  persona === p.key ? 'bg-primary text-white' : 'bg-white text-slate-700'
+                className={`border border-border rounded-tele p-2 text-sm ${
+                  persona === p.key ? 'bg-primary text-white' : 'bg-surface text-slate-700'
                 }`}
               >
                 {p.label}
@@ -31,7 +31,7 @@ const Settings = () => {
             ))}
           </div>
         </div>
-        <button className="bg-primary text-white py-2 rounded-tele shadow-subtle">Save preferences</button>
+        <button className="btn-primary">Save preferences</button>
       </div>
     </Card>
   )

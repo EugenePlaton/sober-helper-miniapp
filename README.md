@@ -15,7 +15,7 @@ cd backend
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env  # обновите DATABASE_URL/SECRET_KEY/TELEGRAM_BOT_TOKEN/OPENROUTER_API_KEY
+cp .env.example .env  # обновите DATABASE_URL/SECRET_KEY/TELEGRAM_BOT_TOKEN/OPENROUTER_API_KEY/OPENROUTER_MODEL
 alembic upgrade head  # применить миграции
 ./start.sh            # прогонит миграции и запустит FastAPI с --reload
 # либо uvicorn app.main:app --reload если БД уже прогнана
@@ -53,24 +53,27 @@ npm run dev
 - Zustand стор для выбора персоны ассистента; статы и тексты заглушки для быстрой демонстрации.
 - PWA манифест и заготовка сервис-воркера (доработайте регистрацию и кеширование при необходимости).
 - Базовая аутентификация: `/auth/register`, `/auth/login`, `/auth/refresh`, `/auth/telegram` (JWT access/refresh, bcrypt), проверка Telegram login по `TELEGRAM_BOT_TOKEN`.
-- Защищённые CRUD эндпоинты: `/habits`, `/check-ins`, `/journals`, `/chat/history`, `/chat/summary`, `/settings`, `/subscriptions` (нужен `Authorization: Bearer <access_token>`).
+- Защищённые CRUD эндпоинты: `/habits`, `/check-ins`, `/journals`, `/chat/history`, `/chat/summary` (+ `/chat/summary/refresh`), `/settings`, `/subscriptions` (нужен `Authorization: Bearer <access_token>`). Добавление сообщения в чат триггерит пересчёт summary в фоне (OpenRouter).
+- Обновлён UI: единые дизайн-токены (цвета/тени/радиусы), компактная навигация, быстрые действия на главной, выровненные формы и кнопки.
+- Frontend API слой: fetch-клиент с рефрешем токена, Zustand auth store, React Query мутации для login/register и чек-инов (нужен `VITE_API_URL` на фронте).
 
 ## Чекпоинты
-- Backend: Alembic + JWT аутентификация (email/password + Telegram), refresh-токены, bcrypt; CRUD по ключевым моделям (привычки, чек-ины, журнал, чат, настройки, подписки).
+- Backend: Alembic + JWT аутентификация (email/password + Telegram), refresh-токены, bcrypt; CRUD по ключевым моделям (привычки, чек-ины, журнал, чат, настройки, подписки); OpenRouter summary автообновление.
+- Frontend: обновлён базовый UI/UX (темизация, bottom-nav, быстрые действия), единые стили форм и кнопок; добавлен API клиент + auth store + базовые мутации (login/register/check-in).
 
 ## TODO (из промпта)
 ### Backend
 - [x] Подключить реальную базу Postgres и миграции (Alembic), вынести секреты в .env.
 - [x] Добавить аутентификацию: Telegram MiniApp login + email/password (JWT, refresh, хэш паролей).
 - [x] CRUD + фильтры/пагинация для ключевых моделей; эндпоинты чата, summary, чек-инов, прогресса, журнала, настроек.
-- [ ] Интеграция OpenRouter + summary engine; хранение последних сообщений и авто-обновление summary.
+- [x] Интеграция OpenRouter + summary engine; хранение последних сообщений и авто-обновление summary.
 - [ ] Лимиты фримиум/подписка, биллинг (Stripe/CryptoCloud/YooKassa) и проверки оплат.
 - [ ] Планировщик уведомлений (ежедневные чек-ины, мотивация), логирование, rate limiting, базовые тесты/CI, Docker.
 - [ ] Реферальная система: генерация кода, события приглашений, бонусы, отчёты в админке.
 
 ### Frontend (MiniApp + Web/PWA)
-- [ ] Настроить полноценный UI: Tailwind дизайн, адаптивные сетки, светлая/тёмная тема.
-- [ ] Подключить API-клиент + React Query: авторизация, чат, чек-ины, журнал, прогресс, биллинг, рефералы.
+- [ ] Настроить полноценный UI: Tailwind дизайн, адаптивные сетки, светлая/тёмная тема (v1 обновление готово, тёмная тема позже).
+- [x] Подключить API-клиент + React Query: авторизация, чат, чек-ины, журнал, прогресс, биллинг, рефералы (базовые login/register/check-in, остальные подключать по мере готовности API).
 - [ ] Завершить экраны и состояния (онбординг, SOS-панель, графики прогресса, админка на отдельных роутерах).
 - [ ] Регистрация/логин (Telegram + email), хранение токена в Zustand/secure storage.
 - [ ] Добавить PWA-сервис-воркер с офлайн-кешем и иконками, интеграцию Telegram MiniApp API (theme params, haptics).

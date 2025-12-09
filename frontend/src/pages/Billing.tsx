@@ -7,7 +7,7 @@ const Billing = () => (
       <li>Pro: unlimited chat, advanced analytics, coping plans, early access.</li>
       <li>Integrate Stripe / YooKassa / CryptoCloud on the backend.</li>
     </ul>
-    <button className="mt-3 w-full bg-primary text-white py-2 rounded-tele shadow-subtle">Upgrade</button>
+    <button className="mt-3 w-full btn-primary">Upgrade</button>
   </Card>
 )
 

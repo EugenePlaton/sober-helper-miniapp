@@ -4,18 +4,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: '#3b82f6',
-          light: '#60a5fa',
-          dark: '#1d4ed8',
-        },
-        surface: '#f8fafc',
+        primary: 'rgb(var(--color-primary) / <alpha-value>)',
+        accent: 'rgb(var(--color-accent) / <alpha-value>)',
+        surface: 'rgb(var(--color-surface) / <alpha-value>)',
+        'surface-strong': 'rgb(var(--color-surface-strong) / <alpha-value>)',
+        border: 'rgb(var(--color-border) / <alpha-value>)',
+        muted: 'rgb(var(--color-muted) / <alpha-value>)',
       },
       boxShadow: {
-        subtle: '0 2px 8px rgba(15, 23, 42, 0.08)',
+        subtle: 'var(--shadow-subtle)',
+        float: 'var(--shadow-float)',
       },
       borderRadius: {
         tele: '12px',
+        xl: '16px',
       },
     },
   },
