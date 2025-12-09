@@ -1,10 +1,18 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import health, users
-from app import db
+from app.api import (
+    health,
+    users,
+    auth,
+    habits,
+    check_ins,
+    journals,
+    settings as settings_api,
+    subscriptions,
+    chat,
+)
 from app.core.config import get_settings
-from app.models.base import Base
 
 settings = get_settings()
 app = FastAPI(title=settings.app_name, debug=settings.debug)
@@ -18,12 +26,14 @@ app.add_middleware(
 )
 
 app.include_router(health.router)
+app.include_router(auth.router)
 app.include_router(users.router)
-
-
-@app.on_event("startup")
-def create_tables() -> None:
-    Base.metadata.create_all(bind=db.engine)
+app.include_router(habits.router)
+app.include_router(check_ins.router)
+app.include_router(journals.router)
+app.include_router(settings_api.router)
+app.include_router(subscriptions.router)
+app.include_router(chat.router)
 
 
 @app.get("/", tags=["root"])

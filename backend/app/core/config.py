@@ -8,7 +8,9 @@ class Settings(BaseSettings):
     backend_cors_origins: list[str] = Field(default_factory=lambda: ["*"])
     database_url: str = Field(default="postgresql+psycopg://user:password@localhost:5432/sober_helper")
     access_token_expire_minutes: int = 60 * 24
+    refresh_token_expire_minutes: int = 60 * 24 * 7
     secret_key: str = "changeme"
+    telegram_bot_token: str | None = None
     openrouter_api_key: str | None = None
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")

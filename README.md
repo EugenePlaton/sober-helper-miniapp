@@ -15,7 +15,10 @@ cd backend
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-uvicorn app.main:app --reload
+cp .env.example .env  # обновите DATABASE_URL/SECRET_KEY/TELEGRAM_BOT_TOKEN/OPENROUTER_API_KEY
+alembic upgrade head  # применить миграции
+./start.sh            # прогонит миграции и запустит FastAPI с --reload
+# либо uvicorn app.main:app --reload если БД уже прогнана
 ```
 
 ### Frontend
@@ -30,6 +33,17 @@ npm run dev
 - Запустите всё разом из корня: `docker compose up --build`.
 - Доступы по умолчанию: API `http://localhost:8000` (Swagger на `/docs`), фронт `http://localhost:5173`, Postgres `localhost:5432` с `sober_helper/sober_helper` и БД `sober_helper`.
 - Код монтируется в контейнеры, бекенд стартует с `--reload`, фронт — с Vite dev server и HMR.
+- Backend контейнер прогоняет `alembic upgrade head` перед запуском, поэтому схема БД будет актуальной.
+
+## Makefile команды (из корня)
+- `make up` — поднять весь стек (db+backend+frontend).
+- `make upb` — поднять db+backend.
+- `make down` — остановить контейнеры.
+- `make logs` — tail логов всех сервисов.
+- `make migrate` — применить миграции (`alembic upgrade head`).
+- `make makemigrations MIGRATION_NAME="add_table"` — сгенерировать миграцию.
+- `make admin` — зайти в shell контейнера backend.
+- `make psql` — открыть psql в контейнере db.
 
 ## Что реализовано в каркасе
 - FastAPI приложение с CORS, health-check `/health`, и минимальным CRUD для пользователей (SQLAlchemy модели включают User/Habit/CheckIn/Journal/ChatHistory/ChatSummary/Settings/Subscription/ReferralCode/ReferralEvent).
@@ -38,24 +52,29 @@ npm run dev
 - Двуязычность через i18next (RU/EN), быстрый переключатель языка в шапке.
 - Zustand стор для выбора персоны ассистента; статы и тексты заглушки для быстрой демонстрации.
 - PWA манифест и заготовка сервис-воркера (доработайте регистрацию и кеширование при необходимости).
+- Базовая аутентификация: `/auth/register`, `/auth/login`, `/auth/refresh`, `/auth/telegram` (JWT access/refresh, bcrypt), проверка Telegram login по `TELEGRAM_BOT_TOKEN`.
+- Защищённые CRUD эндпоинты: `/habits`, `/check-ins`, `/journals`, `/chat/history`, `/chat/summary`, `/settings`, `/subscriptions` (нужен `Authorization: Bearer <access_token>`).
+
+## Чекпоинты
+- Backend: Alembic + JWT аутентификация (email/password + Telegram), refresh-токены, bcrypt; CRUD по ключевым моделям (привычки, чек-ины, журнал, чат, настройки, подписки).
 
 ## TODO (из промпта)
 ### Backend
-1. Подключить реальную базу Postgres и миграции (Alembic), вынести секреты в .env.
-2. Добавить аутентификацию: Telegram MiniApp login + email/password (JWT, refresh, хэш паролей).
-3. CRUD + фильтры/пагинация для всех моделей; эндпоинты чата, summary, чек-инов, прогресса, журнала, настроек.
-4. Интеграция OpenRouter + summary engine; хранение последних сообщений и авто-обновление summary.
-5. Лимиты фримиум/подписка, биллинг (Stripe/CryptoCloud/YooKassa) и проверки оплат.
-6. Планировщик уведомлений (ежедневные чек-ины, мотивация), логирование, rate limiting, базовые тесты/CI, Docker.
-7. Реферальная система: генерация кода, события приглашений, бонусы, отчёты в админке.
+- [x] Подключить реальную базу Postgres и миграции (Alembic), вынести секреты в .env.
+- [x] Добавить аутентификацию: Telegram MiniApp login + email/password (JWT, refresh, хэш паролей).
+- [x] CRUD + фильтры/пагинация для ключевых моделей; эндпоинты чата, summary, чек-инов, прогресса, журнала, настроек.
+- [ ] Интеграция OpenRouter + summary engine; хранение последних сообщений и авто-обновление summary.
+- [ ] Лимиты фримиум/подписка, биллинг (Stripe/CryptoCloud/YooKassa) и проверки оплат.
+- [ ] Планировщик уведомлений (ежедневные чек-ины, мотивация), логирование, rate limiting, базовые тесты/CI, Docker.
+- [ ] Реферальная система: генерация кода, события приглашений, бонусы, отчёты в админке.
 
 ### Frontend (MiniApp + Web/PWA)
-1. Настроить полноценный UI: Tailwind дизайн, адаптивные сетки, светлая/тёмная тема.
-2. Подключить API-клиент + React Query: авторизация, чат, чек-ины, журнал, прогресс, биллинг, рефералы.
-3. Завершить экраны и состояния (онбординг, SOS-панель, графики прогресса, админка на отдельных роутерах).
-4. Регистрация/логин (Telegram + email), хранение токена в Zustand/secure storage.
-5. Добавить PWA-сервис-воркер с офлайн-кешем и иконками, интеграцию Telegram MiniApp API (theme params, haptics).
-6. Покрыть тестами (компонентные + e2e), настроить линтер/форматер.
+- [ ] Настроить полноценный UI: Tailwind дизайн, адаптивные сетки, светлая/тёмная тема.
+- [ ] Подключить API-клиент + React Query: авторизация, чат, чек-ины, журнал, прогресс, биллинг, рефералы.
+- [ ] Завершить экраны и состояния (онбординг, SOS-панель, графики прогресса, админка на отдельных роутерах).
+- [ ] Регистрация/логин (Telegram + email), хранение токена в Zustand/secure storage.
+- [ ] Добавить PWA-сервис-воркер с офлайн-кешем и иконками, интеграцию Telegram MiniApp API (theme params, haptics).
+- [ ] Покрыть тестами (компонентные + e2e), настроить линтер/форматер.
 
 ### Admin Panel
 - Авторизация (email/pass), роли admin/operator.
