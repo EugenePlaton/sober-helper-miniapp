@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator, ConfigDict
 
 from app.schemas.common import User
 
@@ -14,10 +14,28 @@ class RegisterRequest(BaseModel):
     password: str
     language: str | None = None
 
+    @field_validator("password")
+    @classmethod
+    def password_length(cls, v: str) -> str:
+        if len(v) > 100:
+            raise ValueError("Password too long (max 100 characters)")
+        if len(v.encode("utf-8")) > 72:
+            raise ValueError("Password too long for bcrypt (try <=64 characters)")
+        return v
+
 
 class LoginRequest(BaseModel):
     email: str
     password: str
+
+    @field_validator("password")
+    @classmethod
+    def password_length(cls, v: str) -> str:
+        if len(v) > 100:
+            raise ValueError("Password too long (max 100 characters)")
+        if len(v.encode("utf-8")) > 72:
+            raise ValueError("Password too long for bcrypt (try <=64 characters)")
+        return v
 
 
 class RefreshRequest(BaseModel):
@@ -38,5 +56,4 @@ class AuthResponse(BaseModel):
     user: User
     tokens: Token
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

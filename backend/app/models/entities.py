@@ -127,7 +127,6 @@ class ReferralCode(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     owner = relationship("User", back_populates="referral_code")
-    events = relationship("ReferralEvent", back_populates="referrer")
 
 
 class ReferralEvent(Base):
@@ -139,4 +138,5 @@ class ReferralEvent(Base):
     reward_given = Column(Boolean, default=False)
     created_at = Column(DateTime, default=datetime.utcnow)
 
-    referrer = relationship("ReferralCode", back_populates="events", primaryjoin="ReferralCode.owner_user_id==ReferralEvent.referrer_user_id")
+    referrer = relationship("User", foreign_keys=[referrer_user_id])
+    invited = relationship("User", foreign_keys=[invited_user_id])

@@ -10,7 +10,8 @@ from passlib.context import CryptContext
 from app.core.config import get_settings
 
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Use pbkdf2 to avoid bcrypt backend quirks/limits in Alpine builds.
+pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 settings = get_settings()
 
 ALGORITHM = "HS256"

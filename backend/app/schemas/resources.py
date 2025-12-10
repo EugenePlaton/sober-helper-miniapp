@@ -1,13 +1,12 @@
 from datetime import datetime, date
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class HabitBase(BaseModel):
     type: str
     description: str | None = None
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class HabitCreate(HabitBase):
@@ -32,8 +31,7 @@ class CheckInBase(BaseModel):
     notes: str | None = None
     slipped: bool = False
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class CheckInCreate(CheckInBase):
@@ -49,8 +47,7 @@ class CheckIn(CheckInBase):
 class JournalBase(BaseModel):
     content: str
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class JournalCreate(JournalBase):
@@ -68,8 +65,7 @@ class SettingsBase(BaseModel):
     notifications_enabled: bool | None = True
     language: str | None = "en"
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class Settings(SettingsBase):
@@ -82,8 +78,7 @@ class SubscriptionBase(BaseModel):
     limits: str | None = None
     active: bool = True
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class Subscription(SubscriptionBase):
@@ -96,8 +91,7 @@ class ChatMessageBase(BaseModel):
     content: str
     assistant_type: str | None = None
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ChatMessageCreate(ChatMessageBase):
@@ -113,8 +107,7 @@ class ChatMessage(ChatMessageBase):
 class ChatSummaryBase(BaseModel):
     summary: str | None = None
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ChatSummary(ChatSummaryBase):

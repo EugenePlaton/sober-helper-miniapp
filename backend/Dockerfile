@@ -13,6 +13,7 @@ COPY alembic ./alembic
 COPY app ./app
 COPY start.sh .
 RUN chmod +x /app/start.sh
+ENV CELERY_BROKER_URL=redis://redis:6379/0 CELERY_RESULT_BACKEND=redis://redis:6379/0
 
 EXPOSE 8000
 
