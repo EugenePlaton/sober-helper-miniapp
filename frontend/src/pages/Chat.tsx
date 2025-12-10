@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import Card from '../components/Card'
 import { ApiError, chatApi } from '../api'
 import { useAuthStore } from '../store/authStore'
 import UpgradeNotice from '../components/UpgradeNotice'
 
 const Chat = () => {
+  const { t } = useTranslation()
   const user = useAuthStore((s) => s.user)
   const [message, setMessage] = useState('')
   const queryClient = useQueryClient()
@@ -26,17 +28,17 @@ const Chat = () => {
 
   if (!user) {
     return (
-      <Card title="AI Chat" subtitle="Авторизуйтесь, чтобы вести диалог">
-        <p className="text-sm text-muted">Login or Telegram auth required to load your chat history.</p>
+      <Card title={t('chat.title')} subtitle={t('chat.subtitle')}>
+        <p className="text-sm text-muted">{t('chat.unauthorized')}</p>
       </Card>
     )
   }
 
   return (
     <div className="flex flex-col gap-3">
-      <Card title="AI Chat" subtitle="OpenRouter-powered assistant">
+      <Card title={t('chat.title')} subtitle={t('chat.subtitle')}>
         <div className="space-y-3 text-sm">
-          {historyQuery.isLoading && <p className="text-muted text-sm">Loading messages…</p>}
+          {historyQuery.isLoading && <p className="text-muted text-sm">{t('chat.loading')}</p>}
           {historyQuery.data?.map((m) => (
             <div
               key={m.id}
@@ -51,7 +53,7 @@ const Chat = () => {
           <div className="flex gap-2 mt-3">
             <input
               className="input-field flex-1"
-              placeholder="Type a message..."
+              placeholder={t('chat.placeholder')}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
@@ -60,7 +62,7 @@ const Chat = () => {
               disabled={!message || sendMutation.isPending}
               onClick={() => sendMutation.mutate()}
             >
-              {sendMutation.isPending ? 'Sending…' : 'Send'}
+              {sendMutation.isPending ? t('chat.sending') : t('chat.send')}
             </button>
           </div>
           {(sendMutation.isError || historyQuery.isError) && (

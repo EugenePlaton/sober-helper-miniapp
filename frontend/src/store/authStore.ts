@@ -10,6 +10,7 @@ interface AuthState extends Tokens {
   user: User | null
   setAuth: (payload: AuthResponse) => void
   setTokens: (tokens: TokenResponse) => void
+  setUser: (user: User | null) => void
   clear: () => void
 }
 
@@ -54,6 +55,15 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       user: get().user,
       accessToken: tokens.access_token,
       refreshToken: tokens.refresh_token,
+    }
+    persist(next)
+    set(next)
+  },
+  setUser: (user) => {
+    const next = {
+      user,
+      accessToken: get().accessToken,
+      refreshToken: get().refreshToken,
     }
     persist(next)
     set(next)

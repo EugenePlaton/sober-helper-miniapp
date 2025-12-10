@@ -10,6 +10,7 @@ export interface User {
   motivation: string | null
   goal: string | null
   assistant_persona: Persona | null
+  quit_date?: string | null
   is_active: boolean
   is_superuser: boolean
   created_at?: string | null

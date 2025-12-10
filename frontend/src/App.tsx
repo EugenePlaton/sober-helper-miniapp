@@ -1,7 +1,11 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import Layout from './components/Layout'
 import Protected from './components/Protected'
+import RequireProfile from './components/RequireProfile'
+import { useQuery } from '@tanstack/react-query'
+import { profileApi } from './api'
+import { useAuthStore } from './store/authStore'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Onboarding from './pages/Onboarding'
@@ -14,6 +18,19 @@ import Billing from './pages/Billing'
 import Referrals from './pages/Referrals'
 
 function App() {
+  const hasToken = useAuthStore((s) => Boolean(s.accessToken))
+  const setUser = useAuthStore((s) => s.setUser)
+
+  const meQuery = useQuery({
+    queryKey: ['me'],
+    queryFn: () => profileApi.me(),
+    enabled: hasToken,
+  })
+
+  useEffect(() => {
+    if (meQuery.data) setUser(meQuery.data)
+  }, [meQuery.data, setUser])
+
   return (
     <Layout>
       <Suspense fallback={<div className="p-4">Loading...</div>}>
@@ -25,7 +42,9 @@ function App() {
             path="/chat"
             element={
               <Protected>
-                <Chat />
+                <RequireProfile>
+                  <Chat />
+                </RequireProfile>
               </Protected>
             }
           />
@@ -33,7 +52,9 @@ function App() {
             path="/check-in"
             element={
               <Protected>
-                <CheckIn />
+                <RequireProfile>
+                  <CheckIn />
+                </RequireProfile>
               </Protected>
             }
           />
@@ -41,7 +62,9 @@ function App() {
             path="/journal"
             element={
               <Protected>
-                <Journal />
+                <RequireProfile>
+                  <Journal />
+                </RequireProfile>
               </Protected>
             }
           />
@@ -49,7 +72,9 @@ function App() {
             path="/progress"
             element={
               <Protected>
-                <Progress />
+                <RequireProfile>
+                  <Progress />
+                </RequireProfile>
               </Protected>
             }
           />
@@ -57,7 +82,9 @@ function App() {
             path="/settings"
             element={
               <Protected>
-                <Settings />
+                <RequireProfile>
+                  <Settings />
+                </RequireProfile>
               </Protected>
             }
           />
@@ -65,7 +92,9 @@ function App() {
             path="/billing"
             element={
               <Protected>
-                <Billing />
+                <RequireProfile>
+                  <Billing />
+                </RequireProfile>
               </Protected>
             }
           />
@@ -73,7 +102,9 @@ function App() {
             path="/referrals"
             element={
               <Protected>
-                <Referrals />
+                <RequireProfile>
+                  <Referrals />
+                </RequireProfile>
               </Protected>
             }
           />

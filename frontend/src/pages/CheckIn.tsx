@@ -4,8 +4,10 @@ import Card from '../components/Card'
 import { ApiError, checkInApi, journalApi } from '../api'
 import { useAuthStore } from '../store/authStore'
 import UpgradeNotice from '../components/UpgradeNotice'
+import { useTranslation } from 'react-i18next'
 
 const CheckIn = () => {
+  const { t } = useTranslation()
   const [mood, setMood] = useState<number | undefined>(undefined)
   const [craving, setCraving] = useState<number | undefined>(undefined)
   const [notes, setNotes] = useState('')
@@ -25,10 +27,10 @@ const CheckIn = () => {
   })
 
   return (
-    <Card title="Daily check-in" subtitle="Mood, craving, triggers">
+    <Card title={t('checkin.title')} subtitle={t('checkin.subtitle')}>
       <form className="space-y-3">
         <label className="block text-sm text-slate-600">
-          Mood (1-5)
+          {t('checkin.mood')}
           <input
             className="mt-1 input-field"
             type="number"
@@ -39,7 +41,7 @@ const CheckIn = () => {
           />
         </label>
         <label className="block text-sm text-slate-600">
-          Craving (1-5)
+          {t('checkin.craving')}
           <input
             className="mt-1 input-field"
             type="number"
@@ -50,11 +52,11 @@ const CheckIn = () => {
           />
         </label>
         <label className="block text-sm text-slate-600">
-          Notes
+          {t('checkin.notes')}
           <textarea
             className="mt-1 input-field"
             rows={3}
-            placeholder="What helped today?"
+            placeholder={t('checkin.notesPlaceholder')}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
           />
@@ -66,7 +68,7 @@ const CheckIn = () => {
             onClick={() => create.mutate()}
             disabled={create.isPending}
           >
-            {create.isPending ? 'Saving…' : 'Save check-in'}
+            {create.isPending ? 'Saving…' : t('checkin.save')}
           </button>
           <button
             className="btn-ghost w-full disabled:opacity-60"
@@ -74,25 +76,25 @@ const CheckIn = () => {
             onClick={() => saveJournal.mutate()}
             disabled={saveJournal.isPending || !journalNote}
           >
-            {saveJournal.isPending ? 'Saving…' : 'Save note'}
+            {saveJournal.isPending ? 'Saving…' : t('checkin.saveNote')}
           </button>
         </div>
-        {!user && <p className="text-xs text-red-500">Sign in to send check-ins to the API.</p>}
+        {!user && <p className="text-xs text-red-500">{t('checkin.signIn')}</p>}
         {create.isError &&
           (create.error instanceof ApiError && create.error.status === 402 ? (
             <UpgradeNotice message={create.error.message} />
           ) : (
             <p className="text-xs text-red-500">Error: {(create.error as Error).message}</p>
           ))}
-        {create.isSuccess && <p className="text-xs text-green-600">Check-in saved!</p>}
-        {saveJournal.isSuccess && <p className="text-xs text-green-600">Note saved!</p>}
+        {create.isSuccess && <p className="text-xs text-green-600">{t('checkin.saved')}</p>}
+        {saveJournal.isSuccess && <p className="text-xs text-green-600">{t('checkin.noteSaved')}</p>}
       </form>
       <div className="mt-4">
-        <p className="text-sm text-slate-700 mb-2">Quick note (journal)</p>
+        <p className="text-sm text-slate-700 mb-2">{t('checkin.journalTitle')}</p>
         <textarea
           className="input-field"
           rows={3}
-          placeholder="Write freely"
+          placeholder={t('checkin.journalPlaceholder')}
           value={journalNote}
           onChange={(e) => setJournalNote(e.target.value)}
         />

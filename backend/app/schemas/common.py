@@ -25,6 +25,10 @@ class UserCreate(UserBase):
     password: str | None = None
 
 
+class UserUpdate(UserBase):
+    pass
+
+
 class User(UserBase, Timestamped):
     id: int
     is_active: bool
