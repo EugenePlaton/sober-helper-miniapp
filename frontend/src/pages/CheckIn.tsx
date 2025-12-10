@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import Card from '../components/Card'
-import { checkInApi } from '../api'
+import { ApiError, checkInApi } from '../api'
 import { useAuthStore } from '../store/authStore'
+import UpgradeNotice from '../components/UpgradeNotice'
 
 const CheckIn = () => {
   const [mood, setMood] = useState<number | undefined>(undefined)
@@ -63,7 +64,12 @@ const CheckIn = () => {
           </button>
         </div>
         {!user && <p className="text-xs text-red-500">Sign in to send check-ins to the API.</p>}
-        {create.isError && <p className="text-xs text-red-500">Error: {(create.error as Error).message}</p>}
+        {create.isError &&
+          (create.error instanceof ApiError && create.error.status === 402 ? (
+            <UpgradeNotice message={create.error.message} />
+          ) : (
+            <p className="text-xs text-red-500">Error: {(create.error as Error).message}</p>
+          ))}
         {create.isSuccess && <p className="text-xs text-green-600">Saved!</p>}
       </form>
     </Card>

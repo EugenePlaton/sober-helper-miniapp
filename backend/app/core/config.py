@@ -15,6 +15,8 @@ class Settings(BaseSettings):
     openrouter_base_url: str = "https://openrouter.ai/api/v1"
     openrouter_model: str = "openrouter/auto"
     chat_summary_message_limit: int = 20
+    free_chat_daily_limit: int = 30
+    free_checkin_daily_limit: int = 3
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 

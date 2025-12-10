@@ -1,9 +1,19 @@
 import Card from '../components/Card'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
+import { chatApi } from '../api'
+import { useAuthStore } from '../store/authStore'
 
 const Home = () => {
   const { t } = useTranslation()
+  const user = useAuthStore((s) => s.user)
+  const summary = useQuery({
+    queryKey: ['chat-summary'],
+    queryFn: () => chatApi.summary(),
+    enabled: !!user,
+  })
+
   return (
     <div className="flex flex-col gap-4 pb-4">
       <section className="card border border-transparent bg-gradient-to-r from-primary to-accent text-white p-5 shadow-float">
@@ -59,6 +69,16 @@ const Home = () => {
           <button className="btn-ghost">Short walk + music</button>
         </div>
       </Card>
+
+      {user && (
+        <Card title="Summary" subtitle="Your latest AI digest" muted>
+          {summary.isLoading && <p className="text-sm text-muted">Loading summary…</p>}
+          {summary.isError && <p className="text-sm text-red-500">{(summary.error as Error).message}</p>}
+          <p className="text-sm text-slate-800 whitespace-pre-wrap">
+            {summary.data?.summary || 'Send a few chat messages to generate a digest.'}
+          </p>
+        </Card>
+      )}
     </div>
   )
 }

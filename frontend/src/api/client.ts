@@ -1,5 +1,6 @@
 import { useAuthStore } from '../store/authStore'
 import { RefreshPayload, TokenResponse } from './types'
+import { ApiError } from './error'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
@@ -48,9 +49,23 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
     }
   }
 
+  if (response.status === 401) {
+    clear()
+    throw new Error('Unauthorized')
+  }
+
   if (!response.ok) {
-    const text = await response.text()
-    throw new Error(text || 'Request failed')
+    let payload: unknown
+    try {
+      payload = await response.json()
+    } catch {
+      payload = await response.text()
+    }
+    const message =
+      typeof payload === 'string'
+        ? payload || `Request failed with status ${response.status}`
+        : (payload as { detail?: string }).detail || `Request failed with status ${response.status}`
+    throw new ApiError(response.status, message, payload)
   }
 
   if (response.status === 204) return undefined as T

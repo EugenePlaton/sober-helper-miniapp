@@ -1,12 +1,19 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 import Navigation from './Navigation'
 import TopBar from './TopBar'
+import { useAppStore } from '../store/appStore'
 
 interface Props {
   children: ReactNode
 }
 
 const Layout = ({ children }: Props) => {
+  const theme = useAppStore((s) => s.theme)
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+  }, [theme])
+
   return (
     <div className="min-h-screen bg-surface text-slate-900">
       <TopBar />

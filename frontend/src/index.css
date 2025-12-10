@@ -20,6 +20,21 @@
   color: #0f172a;
 }
 
+:root[data-theme='dark'] {
+  --color-primary: 97 150 255;
+  --color-accent: 112 231 198;
+  --color-surface: 18 22 31;
+  --color-surface-strong: 26 32 44;
+  --color-border: 51 65 85;
+  --color-muted: 148 163 184;
+  --shadow-subtle: 0 2px 10px rgba(0, 0, 0, 0.3);
+  --shadow-float: 0 14px 40px rgba(0, 0, 0, 0.35);
+  background: radial-gradient(circle at 10% 20%, rgba(97, 150, 255, 0.12), transparent 30%),
+    radial-gradient(circle at 80% 0%, rgba(112, 231, 198, 0.12), transparent 25%),
+    rgb(var(--color-surface));
+  color: #e2e8f0;
+}
+
 body {
   margin: 0;
 }

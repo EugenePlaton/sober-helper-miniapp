@@ -45,7 +45,7 @@ npm run dev
 - `make admin` — зайти в shell контейнера backend.
 - `make psql` — открыть psql в контейнере db.
 
-## Что реализовано в каркасе
+## Что реализовано (чекпоинты)
 - FastAPI приложение с CORS, health-check `/health`, и минимальным CRUD для пользователей (SQLAlchemy модели включают User/Habit/CheckIn/Journal/ChatHistory/ChatSummary/Settings/Subscription/ReferralCode/ReferralEvent).
 - Базовые React-страницы: Login, Onboarding, Home, Chat, Check-in, Journal, Progress, Settings, Billing, Referrals.
 - Общие UI-компоненты в стиле Telegram (TopBar, нижняя навигация, карточки), мобильный первый подход.
@@ -56,10 +56,7 @@ npm run dev
 - Защищённые CRUD эндпоинты: `/habits`, `/check-ins`, `/journals`, `/chat/history`, `/chat/summary` (+ `/chat/summary/refresh`), `/settings`, `/subscriptions` (нужен `Authorization: Bearer <access_token>`). Добавление сообщения в чат триггерит пересчёт summary в фоне (OpenRouter).
 - Обновлён UI: единые дизайн-токены (цвета/тени/радиусы), компактная навигация, быстрые действия на главной, выровненные формы и кнопки.
 - Frontend API слой: fetch-клиент с рефрешем токена, Zustand auth store, React Query мутации для login/register и чек-инов (нужен `VITE_API_URL` на фронте).
-
-## Чекпоинты
-- Backend: Alembic + JWT аутентификация (email/password + Telegram), refresh-токены, bcrypt; CRUD по ключевым моделям (привычки, чек-ины, журнал, чат, настройки, подписки); OpenRouter summary автообновление.
-- Frontend: обновлён базовый UI/UX (темизация, bottom-nav, быстрые действия), единые стили форм и кнопок; добавлен API клиент + auth store + базовые мутации (login/register/check-in).
+- Лимиты фримиум (free план): check-in до `FREE_CHECKIN_DAILY_LIMIT` в сутки, чат до `FREE_CHAT_DAILY_LIMIT` сообщений в сутки; превышение даёт 402.
 
 ## TODO (из промпта)
 ### Backend
@@ -67,12 +64,12 @@ npm run dev
 - [x] Добавить аутентификацию: Telegram MiniApp login + email/password (JWT, refresh, хэш паролей).
 - [x] CRUD + фильтры/пагинация для ключевых моделей; эндпоинты чата, summary, чек-инов, прогресса, журнала, настроек.
 - [x] Интеграция OpenRouter + summary engine; хранение последних сообщений и авто-обновление summary.
-- [ ] Лимиты фримиум/подписка, биллинг (Stripe/CryptoCloud/YooKassa) и проверки оплат.
+- [ ] Лимиты фримиум/подписка, биллинг (Stripe/CryptoCloud/YooKassa) и проверки оплат (чекаут/вебхуки).
 - [ ] Планировщик уведомлений (ежедневные чек-ины, мотивация), логирование, rate limiting, базовые тесты/CI, Docker.
 - [ ] Реферальная система: генерация кода, события приглашений, бонусы, отчёты в админке.
 
 ### Frontend (MiniApp + Web/PWA)
-- [ ] Настроить полноценный UI: Tailwind дизайн, адаптивные сетки, светлая/тёмная тема (v1 обновление готово, тёмная тема позже).
+- [ ] Настроить полноценный UI: Tailwind дизайн, адаптивные сетки, светлая/тёмная тема (v1 светлой темы готов, тёмная тема переключается через settings, ещё требует доработки).
 - [x] Подключить API-клиент + React Query: авторизация, чат, чек-ины, журнал, прогресс, биллинг, рефералы (базовые login/register/check-in, остальные подключать по мере готовности API).
 - [ ] Завершить экраны и состояния (онбординг, SOS-панель, графики прогресса, админка на отдельных роутерах).
 - [ ] Регистрация/логин (Telegram + email), хранение токена в Zustand/secure storage.

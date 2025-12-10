@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { Suspense } from 'react'
 import Layout from './components/Layout'
+import Protected from './components/Protected'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Onboarding from './pages/Onboarding'
@@ -20,13 +21,62 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/onboarding" element={<Onboarding />} />
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/check-in" element={<CheckIn />} />
-          <Route path="/journal" element={<Journal />} />
-          <Route path="/progress" element={<Progress />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/billing" element={<Billing />} />
-          <Route path="/referrals" element={<Referrals />} />
+          <Route
+            path="/chat"
+            element={
+              <Protected>
+                <Chat />
+              </Protected>
+            }
+          />
+          <Route
+            path="/check-in"
+            element={
+              <Protected>
+                <CheckIn />
+              </Protected>
+            }
+          />
+          <Route
+            path="/journal"
+            element={
+              <Protected>
+                <Journal />
+              </Protected>
+            }
+          />
+          <Route
+            path="/progress"
+            element={
+              <Protected>
+                <Progress />
+              </Protected>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <Protected>
+                <Settings />
+              </Protected>
+            }
+          />
+          <Route
+            path="/billing"
+            element={
+              <Protected>
+                <Billing />
+              </Protected>
+            }
+          />
+          <Route
+            path="/referrals"
+            element={
+              <Protected>
+                <Referrals />
+              </Protected>
+            }
+          />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Suspense>

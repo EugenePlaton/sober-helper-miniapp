@@ -1,22 +1,32 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import Card from '../components/Card'
 import { authApi } from '../api'
 import { useAuthStore } from '../store/authStore'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const user = useAuthStore((s) => s.user)
   const clear = useAuthStore((s) => s.clear)
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from = (location.state as { from?: Location })?.from?.pathname || '/'
 
   const login = useMutation({
     mutationFn: () => authApi.login({ email, password }),
+    onSuccess: () => navigate(from, { replace: true }),
   })
 
   const register = useMutation({
     mutationFn: () => authApi.register({ email, password }),
+    onSuccess: () => navigate(from, { replace: true }),
   })
+
+  useEffect(() => {
+    if (user) navigate(from, { replace: true })
+  }, [user, from, navigate])
 
   return (
     <Card title="Login" subtitle="Telegram or email/password">
@@ -68,6 +78,11 @@ const Login = () => {
             <p>Tokens will be stored locally after auth.</p>
           )}
         </div>
+        {user && (
+          <Link to="/" className="text-sm text-primary text-center">
+            Go to Home
+          </Link>
+        )}
       </div>
     </Card>
   )

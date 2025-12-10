@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from app import db
 from app.dependencies.auth import get_current_user
+from app.dependencies import subscription as subscription_limits
 from app.models import entities
 from app.schemas import resources
 from app.services import summary as summary_service
@@ -32,6 +33,8 @@ def add_history(
     current_user: entities.User = Depends(get_current_user),
     background_tasks: BackgroundTasks = None,
 ):
+    subscription_limits.enforce_chat_limit(session, current_user)
+
     message = entities.ChatHistory(
         user_id=current_user.id,
         role=payload.role,

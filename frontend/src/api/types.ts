@@ -61,3 +61,61 @@ export interface CheckIn {
   slipped: boolean
   created_at?: string | null
 }
+
+export interface ChatMessagePayload {
+  role: 'user' | 'assistant' | 'system'
+  content: string
+  assistant_type?: Persona | null
+}
+
+export interface ChatMessage extends ChatMessagePayload {
+  id: number
+  user_id: number
+  created_at?: string | null
+}
+
+export interface ChatSummary {
+  id: number
+  user_id: number
+  summary: string | null
+  updated_at?: string | null
+}
+
+export interface JournalPayload {
+  content: string
+}
+
+export interface Journal {
+  id: number
+  user_id: number
+  content: string
+  created_at?: string | null
+}
+
+export interface SettingsPayload {
+  theme?: string | null
+  notifications_enabled?: boolean | null
+  language?: string | null
+}
+
+export interface Settings {
+  id: number
+  user_id: number
+  theme: string | null
+  notifications_enabled: boolean
+  language: string | null
+}
+
+export interface SubscriptionPayload {
+  plan?: string
+  limits?: string | null
+  active?: boolean
+}
+
+export interface Subscription {
+  id: number
+  user_id: number
+  plan: string
+  limits: string | null
+  active: boolean
+}

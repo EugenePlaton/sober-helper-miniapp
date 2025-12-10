@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from app import db
 from app.dependencies.auth import get_current_user
+from app.dependencies import subscription as subscription_limits
 from app.models import entities
 from app.schemas import resources
 
@@ -32,6 +33,8 @@ def create_check_in(
     session: Session = Depends(db.get_db),
     current_user: entities.User = Depends(get_current_user),
 ):
+    subscription_limits.enforce_checkin_limit(session, current_user)
+
     check_in = entities.CheckIn(
         user_id=current_user.id,
         mood=payload.mood,
