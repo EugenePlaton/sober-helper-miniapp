@@ -16,6 +16,8 @@ const Settings = () => {
   const persona = useAppStore((s) => s.assistantPersona)
   const setPersona = useAppStore((s) => s.setPersona)
   const setThemeStore = useAppStore((s) => s.setTheme)
+  const [dependency, setDependency] = useState('Алкоголь')
+  const [goal, setGoal] = useState('30 дней')
   const user = useAuthStore((s) => s.user)
   const [theme, setTheme] = useState('light')
   const [notifications, setNotifications] = useState(true)
@@ -96,6 +98,24 @@ const Settings = () => {
               <option value="en">English</option>
               <option value="ru">Русский</option>
             </select>
+          </label>
+          <label className="border border-border rounded-tele p-3 flex items-center justify-between col-span-2">
+            <span>Habit</span>
+            <input
+              className="input-field"
+              value={dependency}
+              onChange={(e) => setDependency(e.target.value)}
+              placeholder="Например, алкоголь"
+            />
+          </label>
+          <label className="border border-border rounded-tele p-3 flex items-center justify-between col-span-2">
+            <span>Goal</span>
+            <input
+              className="input-field"
+              value={goal}
+              onChange={(e) => setGoal(e.target.value)}
+              placeholder="30 дней"
+            />
           </label>
         </div>
 

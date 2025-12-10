@@ -1,18 +1,11 @@
 import Card from '../components/Card'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
-import { chatApi } from '../api'
 import { useAuthStore } from '../store/authStore'
 
 const Home = () => {
   const { t } = useTranslation()
   const user = useAuthStore((s) => s.user)
-  const summary = useQuery({
-    queryKey: ['chat-summary'],
-    queryFn: () => chatApi.summary(),
-    enabled: !!user,
-  })
 
   return (
     <div className="flex flex-col gap-4 pb-4">
@@ -70,15 +63,28 @@ const Home = () => {
         </div>
       </Card>
 
-      {user && (
-        <Card title="Summary" subtitle="Your latest AI digest" muted>
-          {summary.isLoading && <p className="text-sm text-muted">Loading summary…</p>}
-          {summary.isError && <p className="text-sm text-red-500">{(summary.error as Error).message}</p>}
-          <p className="text-sm text-slate-800 whitespace-pre-wrap">
-            {summary.data?.summary || 'Send a few chat messages to generate a digest.'}
-          </p>
-        </Card>
-      )}
+      <Card title="Achievements" subtitle="Keep friends updated" muted>
+        <div className="grid grid-cols-2 gap-2 text-sm">
+          <div className="card p-3 border border-border">
+            <p className="text-xs text-muted">Days sober</p>
+            <p className="text-2xl font-semibold">7</p>
+          </div>
+          <div className="card p-3 border border-border">
+            <p className="text-xs text-muted">Followers</p>
+            <p className="text-2xl font-semibold">3</p>
+          </div>
+          <div className="card p-3 border border-border col-span-2">
+            <p className="text-xs text-muted">Next badge</p>
+            <p className="text-slate-800">Reach 10 days to unlock “Starter Streak”.</p>
+          </div>
+        </div>
+        <div className="mt-3 flex gap-2">
+          <button className="btn-ghost w-full">Share progress</button>
+          <Link to="/progress" className="btn-primary w-full text-center">
+            View profile
+          </Link>
+        </div>
+      </Card>
     </div>
   )
 }

@@ -39,6 +39,10 @@ body {
   margin: 0;
 }
 
+.text-muted {
+  color: rgb(var(--color-muted));
+}
+
 .container-page {
   max-width: 1024px;
   margin: 0 auto;

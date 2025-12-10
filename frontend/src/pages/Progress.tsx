@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import Card from '../components/Card'
-import { checkInApi, chatApi } from '../api'
+import { checkInApi } from '../api'
 import { useAuthStore } from '../store/authStore'
 
 const Progress = () => {
@@ -10,12 +10,6 @@ const Progress = () => {
   const checkIns = useQuery({
     queryKey: ['check-ins', 30],
     queryFn: () => checkInApi.list(30),
-    enabled: !!user,
-  })
-
-  const summary = useQuery({
-    queryKey: ['chat-summary'],
-    queryFn: () => chatApi.summary(),
     enabled: !!user,
   })
 
@@ -58,12 +52,25 @@ const Progress = () => {
         </div>
         {checkIns.isError && <p className="text-xs text-red-500 mt-2">Error: {(checkIns.error as Error).message}</p>}
       </Card>
-      <Card title="AI analysis">
-        {summary.isLoading && <p className="text-sm text-muted">Loading summary…</p>}
-        {summary.isError && <p className="text-sm text-red-500">{(summary.error as Error).message}</p>}
-        <p className="text-sm text-slate-700 whitespace-pre-wrap">
-          {summary.data?.summary || 'Send chat messages to generate summary with triggers and trends.'}
+      <Card title="Achievements & sharing">
+        <p className="text-sm text-slate-700">
+          Share your streak with friends or accountability buddies. Unlock badges for 7, 14, 30 days and keep a public
+          page.
         </p>
+        <div className="grid grid-cols-2 gap-2 mt-3 text-sm">
+          <div className="card p-3 border border-border">
+            <p className="text-xs text-muted">Public link</p>
+            <p className="font-semibold text-slate-900 break-all">sober.app/u/you</p>
+          </div>
+          <div className="card p-3 border border-border">
+            <p className="text-xs text-muted">Followers</p>
+            <p className="text-2xl font-semibold">3</p>
+          </div>
+          <div className="card p-3 border border-border col-span-2">
+            <p className="text-xs text-muted">Next badge</p>
+            <p className="text-slate-800">10 days streak → “Starter Streak”.</p>
+          </div>
+        </div>
       </Card>
     </div>
   )

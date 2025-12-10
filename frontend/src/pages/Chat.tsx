@@ -16,24 +16,12 @@ const Chat = () => {
     enabled: !!user,
   })
 
-  const summaryQuery = useQuery({
-    queryKey: ['chat-summary'],
-    queryFn: () => chatApi.summary(),
-    enabled: !!user,
-  })
-
   const sendMutation = useMutation({
     mutationFn: () => chatApi.send({ role: 'user', content: message }),
     onSuccess: () => {
       setMessage('')
       queryClient.invalidateQueries({ queryKey: ['chat-history'] })
-      queryClient.invalidateQueries({ queryKey: ['chat-summary'] })
     },
-  })
-
-  const refreshSummary = useMutation({
-    mutationFn: () => chatApi.refreshSummary(),
-    onSuccess: () => summaryQuery.refetch(),
   })
 
   if (!user) {
@@ -88,30 +76,6 @@ const Chat = () => {
               )}
             </>
           )}
-        </div>
-      </Card>
-
-      <Card title="Summary" subtitle="Auto-updated after messages">
-        {summaryQuery.isLoading && <p className="text-sm text-muted">Loading summary…</p>}
-        {summaryQuery.isError && <p className="text-sm text-red-500">{(summaryQuery.error as Error).message}</p>}
-        <p className="text-sm text-slate-800 whitespace-pre-wrap">
-          {summaryQuery.data?.summary || 'No summary yet — send a few messages to generate one.'}
-        </p>
-        <div className="flex gap-2 mt-3">
-          <button
-            className="btn-ghost w-full disabled:opacity-60"
-            onClick={() => summaryQuery.refetch()}
-            disabled={summaryQuery.isFetching}
-          >
-            {summaryQuery.isFetching ? 'Refreshing…' : 'Refresh'}
-          </button>
-          <button
-            className="btn-primary w-full disabled:opacity-60"
-            onClick={() => refreshSummary.mutate()}
-            disabled={refreshSummary.isPending}
-          >
-            {refreshSummary.isPending ? 'Rebuild…' : 'Rebuild summary'}
-          </button>
         </div>
       </Card>
     </div>
