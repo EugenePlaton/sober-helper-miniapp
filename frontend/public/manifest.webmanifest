@@ -1,0 +1,9 @@
+{
+  "name": "Sober Helper",
+  "short_name": "SoberHelper",
+  "display": "standalone",
+  "start_url": "/",
+  "background_color": "#f8fafc",
+  "theme_color": "#3b82f6",
+  "icons": []
+}

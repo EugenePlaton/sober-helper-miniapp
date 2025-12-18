@@ -1,0 +1,102 @@
+{
+  "appTitle": "Sober Helper",
+  "appSubtitle": "Мини-приложение + Web/PWA",
+  "nav": {
+    "home": "Главная",
+    "chat": "Чат",
+    "checkIn": "Чек-ин",
+    "progress": "Прогресс",
+    "settings": "Настройки"
+  },
+  "home": {
+    "streak": "Текущий стрик",
+    "goal": "Цель",
+    "days": "дней",
+    "motivation": "Мотивация",
+    "motivationText": "Оставайся на пути. Ассистент подскажет техники, когда тяга или настроение падает.",
+    "quick": "Быстрые действия",
+    "quickSubtitle": "Сфокусируйся на важном",
+    "quickChat": "SOS, тяга, быстрые техники",
+    "quickCheckin": "Настроение, тяга, заметки",
+    "quickProgress": "Стрик, триггеры, тренды",
+    "quickJournal": "Свободные заметки",
+    "sosTitle": "SOS — тяга",
+    "sosSubtitle": "Быстро заземлиться",
+    "sos1": "Дыхание 4-7-8",
+    "sos2": "Grounding 5-4-3-2-1",
+    "sos3": "Холодная вода",
+    "sos4": "Короткая прогулка + музыка",
+    "achievements": "Достижения",
+    "achievementsSubtitle": "Делись прогрессом",
+    "achievementsDays": "Дней трезвости",
+    "achievementsFollowers": "Подписчики",
+    "achievementsNext": "Следующий бейдж",
+    "achievementsNextText": "Дойди до 10 дней, чтобы получить «Starter Streak».",
+    "shareProgress": "Поделиться прогрессом",
+    "viewProfile": "Профиль"
+  },
+  "checkin": {
+    "title": "Ежедневный чек-ин",
+    "subtitle": "Настроение, тяга, триггеры",
+    "mood": "Настроение (1-5)",
+    "craving": "Тяга (1-5)",
+    "notes": "Заметки",
+    "notesPlaceholder": "Что помогло сегодня?",
+    "save": "Сохранить чек-ин",
+    "saveNote": "Сохранить заметку",
+    "journalTitle": "Быстрая заметка (журнал)",
+    "journalPlaceholder": "Пиши свободно",
+    "signIn": "Войдите, чтобы отправлять чек-ины.",
+    "saved": "Чек-ин сохранён!",
+    "noteSaved": "Заметка сохранена!"
+  },
+  "chat": {
+    "title": "AI Чат",
+    "subtitle": "Ассистент на OpenRouter",
+    "unauthorized": "Войдите (Telegram/email), чтобы загрузить историю.",
+    "loading": "Загружаем сообщения…",
+    "placeholder": "Напиши сообщение...",
+    "sending": "Отправляем…",
+    "send": "Отправить"
+  },
+  "progress": {
+    "title": "Прогресс",
+    "login": "Войдите, чтобы увидеть статистику",
+    "loginHelp": "Авторизуйтесь, чтобы подтянуть чек-ины и сводки.",
+    "snapshotTitle": "Срез прогресса",
+    "snapshotSubtitle": "Здесь будут графики и инсайты",
+    "checkins": "Чек-ины",
+    "craving": "Средняя тяга",
+    "relapses": "Срывы",
+    "mood": "Тренд настроения",
+    "error": "Ошибка: {{message}}",
+    "achievementsTitle": "Достижения и шаринг",
+    "achievementsText": "Делитесь стриком с друзьями/бадди. Получайте бейджи за 7, 14, 30 дней и держите публичный профиль.",
+    "publicLink": "Публичная ссылка",
+    "followers": "Подписчики",
+    "nextBadge": "Следующий бейдж",
+    "nextBadgeText": "10 дней стрика → «Starter Streak»."
+  },
+  "cta": {
+    "chat": "Открыть чат",
+    "checkIn": "Дневной чек-ин",
+    "sos": "SOS — тяга",
+    "journal": "Новая заметка",
+    "progress": "Посмотреть прогресс",
+    "billing": "Перейти на Pro",
+    "referrals": "Пригласить друзей"
+  },
+  "personas": {
+    "calm": "Спокойный наставник",
+    "friendly": "Дружелюбный друг",
+    "coach": "Жёсткий тренер",
+    "toxic": "Токсичный режим"
+  },
+  "sections": {
+    "progress": "Прогресс",
+    "journal": "Журнал",
+    "settings": "Настройки",
+    "billing": "Подписка",
+    "referrals": "Рефералы"
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "appTitle": "Sober Helper",
+  "appSubtitle": "MiniApp + Web/PWA",
+  "nav": {
+    "home": "Home",
+    "chat": "Chat",
+    "checkIn": "Check-in",
+    "progress": "Progress",
+    "settings": "Settings"
+  },
+  "home": {
+    "streak": "Current streak",
+    "goal": "Goal",
+    "days": "days",
+    "motivation": "Motivation",
+    "motivationText": "Stay consistent. Your AI buddy will nudge you with coping strategies.",
+    "quick": "Quick actions",
+    "quickSubtitle": "Focus on the essentials",
+    "quickChat": "SOS, craving, quick coping tools",
+    "quickCheckin": "Mood, craving, notes",
+    "quickProgress": "Streak, triggers, trends",
+    "quickJournal": "Free writing",
+    "sosTitle": "SOS — craving",
+    "sosSubtitle": "Ground quickly",
+    "sos1": "Breathing 4-7-8",
+    "sos2": "Grounding 5-4-3-2-1",
+    "sos3": "Cold water splash",
+    "sos4": "Short walk + music",
+    "achievements": "Achievements",
+    "achievementsSubtitle": "Keep friends updated",
+    "achievementsDays": "Days sober",
+    "achievementsFollowers": "Followers",
+    "achievementsNext": "Next badge",
+    "achievementsNextText": "Reach 10 days to unlock “Starter Streak”.",
+    "shareProgress": "Share progress",
+    "viewProfile": "View profile"
+  },
+  "checkin": {
+    "title": "Daily check-in",
+    "subtitle": "Mood, craving, triggers",
+    "mood": "Mood (1-5)",
+    "craving": "Craving (1-5)",
+    "notes": "Notes",
+    "notesPlaceholder": "What helped today?",
+    "save": "Save check-in",
+    "saveNote": "Save note",
+    "journalTitle": "Quick note (journal)",
+    "journalPlaceholder": "Write freely",
+    "signIn": "Sign in to send check-ins to the API.",
+    "saved": "Check-in saved!",
+    "noteSaved": "Note saved!"
+  },
+  "chat": {
+    "title": "AI Chat",
+    "subtitle": "OpenRouter-powered assistant",
+    "unauthorized": "Login or Telegram auth required to load your chat history.",
+    "loading": "Loading messages…",
+    "placeholder": "Type a message...",
+    "sending": "Sending…",
+    "send": "Send"
+  },
+  "progress": {
+    "title": "Progress",
+    "login": "Login to see your stats",
+    "loginHelp": "Sign in to fetch check-ins and chat summary.",
+    "snapshotTitle": "Progress snapshot",
+    "snapshotSubtitle": "Charts and insights placeholder",
+    "checkins": "Check-ins",
+    "craving": "Craving avg",
+    "relapses": "Relapses",
+    "mood": "Mood trend",
+    "error": "Error: {{message}}",
+    "achievementsTitle": "Achievements & sharing",
+    "achievementsText": "Share your streak with friends or accountability buddies. Unlock badges for 7, 14, 30 days and keep a public page.",
+    "publicLink": "Public link",
+    "followers": "Followers",
+    "nextBadge": "Next badge",
+    "nextBadgeText": "10 days streak → “Starter Streak”."
+  },
+  "cta": {
+    "chat": "Open chat",
+    "checkIn": "Daily check-in",
+    "sos": "SOS — craving",
+    "journal": "Write note",
+    "progress": "View progress",
+    "billing": "Upgrade to Pro",
+    "referrals": "Invite friends"
+  },
+  "personas": {
+    "calm": "Calm mentor",
+    "friendly": "Friendly buddy",
+    "coach": "Tough coach",
+    "toxic": "Toxic mode"
+  },
+  "sections": {
+    "progress": "Progress",
+    "journal": "Journal",
+    "settings": "Settings",
+    "billing": "Billing",
+    "referrals": "Referrals"
+  }
+}
